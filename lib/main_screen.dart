@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:mustlist/add_screen.dart';
 import 'package:mustlist/model/assignments_list.dart';
 
-class MainScreen extends StatelessWidget {
-  final Assignment? assignment;
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
-  const MainScreen({Key? key, this.assignment}) : super(key: key);
+  @override
+  State<MainScreen> createState() => _MainState();
+}
+
+class _MainState extends State<MainScreen> {
+  Assignment? assignment;
+
+  void deleteAssign() {
+    setState(() {
+      assignmentList.removeAt(0);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +64,13 @@ class MainScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      ElevatedButton(
+                        child: const Icon(Icons.delete),
+                        onPressed: () {
+                          deleteAssign();
+                        },
+                      ),
                     ],
                   ),
                 );
@@ -74,15 +91,3 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
-
-              // ListView.builder(
-              //     itemCount: assignmentList.length,
-              //     itemBuilder: (context, index) {
-              //       final Assignment assignments = assignmentList[index];
-              //       return ListTile(
-              //         title: Text(
-              //           assignments.name,
-              //         ),
-              //         subtitle: Text(assignments.description),
-              //       );
-              //     })
